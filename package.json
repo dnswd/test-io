@@ -18,7 +18,7 @@
   },
   "scripts": {
     "pg": "node pg.js",
-    "write": "node rw.js",
-    "read": "node rr.js"
+    "write": "node rw.mjs",
+    "read": "node rr.mjs"
   }
 }
