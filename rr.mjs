@@ -6,7 +6,7 @@ import readline from 'readline';
 
 const n = 100
 const mbSize = 1
-const file = 'cid.txt'
+const file = `cid-${mbSize}MB.txt`
 
 // Sample data for the CSV table
 const dataIpfsRead = [];
@@ -25,8 +25,8 @@ async function main() {
   console.log('Connecting to local IPFS...')
 
   const ipfs = createHttpClient({
-    host: 'localhost',
-    port: 5001,
+    host: '127.0.0.1',
+    port: 5002,
     protocol: 'http'
   })
 
@@ -53,7 +53,7 @@ async function main() {
 
   console.log('Data remote read ran successfully.');
   csvWriterIpfsRead
-    .writeRecords(dataWrite)
+    .writeRecords(dataIpfsRead)
     .then(() => console.log('CSV table has been written successfully.'))
     .catch((error) => console.error('Error writing CSV table:', error));
 }

@@ -46,7 +46,7 @@ async function main() {
   console.log('Connecting to local IPFS...')
 
   const ipfs = createHttpClient({
-    host: 'localhost',
+    host: '127.0.0.1',
     port: 5002,
     protocol: 'http'
   })
@@ -70,10 +70,10 @@ async function main() {
   }
   console.log('Data write ran successfully.');
   csvWriterIpfsWrite
-    .writeRecords(dataWrite)
+    .writeRecords(dataIpfsWrite)
     .then(() => console.log('CSV table has been written successfully.'))
     .catch((error) => console.error('Error writing CSV table:', error));
-  await writeFile('cid.txt', CID)
+  await writeFile(`cid-${mbSize}MB.txt`, CID)
   console.log('All the CIDs are saved in cid.txt')
 }
 
