@@ -41,9 +41,6 @@ const generateMegaBytes = (megaByteSize) => {
   return crypto.randomBytes(byteSize);
 };
 
-await ipfs.add(testObjectString)
-await ipfs.cat()
-
 async function main() {
   console.log(`Starting ${n} test with ${mbSize} MiB data each.`)
   console.log('Connecting to local IPFS...')
