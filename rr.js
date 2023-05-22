@@ -1,7 +1,7 @@
 import { create as createHttpClient } from 'ipfs-http-client'
-const { hrtime } = require('node:process');
-const fs = require('fs');
-const readline = require('readline')
+import { hrtime } from 'process';
+import fs from 'fs';
+import readline from 'readline';
 
 // Sample data for the CSV table
 const dataIpfsRead = [];

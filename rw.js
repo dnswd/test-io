@@ -1,6 +1,6 @@
 import { create as createHttpClient } from 'ipfs-http-client'
-const { hrtime } = require('node:process');
-const fs = require('fs');
+import { hrtime } from 'process';
+import fs from 'fs';
 
 async function writeFile(filePath, lines) {
   const writeStream = fs.createWriteStream(filePath);
@@ -47,7 +47,7 @@ async function main() {
 
   const ipfs = createHttpClient({
     host: 'localhost',
-    port: 5001,
+    port: 5002,
     protocol: 'http'
   })
 
