@@ -9,7 +9,7 @@ const dataRead = [];
 const dataWrite = [];
 
 const n = 100
-const mbSize = 64
+const mbSize = 1
 const sqlCreateTable = `
 CREATE TABLE key_byte_storage (
   key VARCHAR(255) PRIMARY KEY,
