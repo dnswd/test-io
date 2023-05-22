@@ -4,6 +4,9 @@ import { create as createHttpClient } from 'ipfs-http-client'
 import { hrtime } from 'process';
 import fs from 'fs';
 
+const n = 100
+const mbSize = 1
+
 async function writeFile(filePath, lines) {
   const writeStream = fs.createWriteStream(filePath);
 
@@ -32,8 +35,6 @@ const csvWriterIpfsWrite = createCsvWriter({
     { id: 'cid', title: 'CID' },
   ],
 });
-const n = 100
-const mbSize = 1
 
 const generateMegaBytes = (megaByteSize) => {
   const byteSize = megaByteSize * 1024 * 1024;

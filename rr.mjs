@@ -4,6 +4,10 @@ import { hrtime } from 'process';
 import fs from 'fs';
 import readline from 'readline';
 
+const n = 100
+const mbSize = 1
+const file = 'cid.txt'
+
 // Sample data for the CSV table
 const dataIpfsRead = [];
 const csvWriterIpfsRead = createCsvWriter({
@@ -15,10 +19,6 @@ const csvWriterIpfsRead = createCsvWriter({
     { id: 'cid', title: 'CID' },
   ],
 });
-
-const n = 100
-const mbSize = 1
-const file = 'cid.txt'
 
 async function main() {
   console.log(`Starting ${n} test with ${mbSize} MiB data each.`)
