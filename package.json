@@ -4,10 +4,21 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@chainsafe/libp2p-gossipsub": "^8.0.0",
+    "@chainsafe/libp2p-noise": "^12.0.1",
+    "@koush/wrtc": "^0.5.3",
+    "@libp2p/bootstrap": "^8.0.0",
+    "@libp2p/kad-dht": "^9.3.4",
+    "@libp2p/mplex": "^8.0.3",
+    "@libp2p/webrtc-star": "^7.0.0",
     "csv-writer": "^1.6.0",
+    "ipfs-http-client": "^60.0.0",
+    "libp2p": "^0.45.2",
     "pg": "^8.11.0"
   },
   "scripts": {
-    "start": "node pg.js"
+    "pg": "node pg.js",
+    "write": "node rw.js",
+    "read": "node rr.js"
   }
 }
