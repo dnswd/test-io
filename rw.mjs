@@ -7,6 +7,10 @@ import fs from 'fs';
 const n = 100
 const mbSize = 1
 
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms*1000));
+}
+
 async function writeFile(filePath, lines) {
   const writeStream = fs.createWriteStream(filePath);
 
@@ -67,6 +71,7 @@ async function main() {
     })
     CID.push(res.path)
     console.log(`Successfully added ${res.path}`)
+    await delay(3)
   }
   console.log('Data write ran successfully.');
   csvWriterIpfsWrite
