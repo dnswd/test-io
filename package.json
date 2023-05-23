@@ -12,6 +12,7 @@
     "@libp2p/mplex": "^8.0.3",
     "@libp2p/webrtc-star": "^7.0.0",
     "csv-writer": "^1.6.0",
+    "fs-extra": "^11.1.1",
     "ipfs-http-client": "^60.0.0",
     "libp2p": "^0.45.2",
     "pg": "^8.11.0"

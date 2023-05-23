@@ -2,6 +2,8 @@ import { createObjectCsvWriter as createCsvWriter } from 'csv-writer';
 import crypto from 'crypto';
 import { create as createHttpClient } from 'ipfs-http-client'
 import { hrtime } from 'process';
+import { spawn } from 'child_process';
+import { removeSync } from 'fs-extra/esm'
 import fs from 'fs';
 
 const n = 20
@@ -11,6 +13,17 @@ const file = `cid-${mbSize}MB-3.txt`
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms*1000));
 }
+
+const deleteIPFSDirectory = async () => {
+  const ipfsDirPath = path.join(process.env.HOME, '.ipfs');
+
+  try {
+    await removeSync(ipfsDirPath);
+    console.log('IPFS directory deleted.');
+  } catch (err) {
+    console.error(`Failed to delete IPFS directory: ${err}`);
+  }
+};
 
 async function writeFile(filePath, lines) {
   const writeStream = fs.createWriteStream(filePath);
@@ -48,6 +61,15 @@ const generateMegaBytes = (megaByteSize) => {
 
 async function main() {
   console.log(`Starting ${n} test with ${mbSize} MiB data each.`)
+  console.log('Starting IPFS Daemon...')
+  const ipfsDaemon = spawn('ipfs', ['daemon']);
+  const stopIPFSDaemon = async () => {
+    ipfsDaemon.kill('SIGINT');
+    await deleteIPFSDirectory();
+  };
+
+  // wait until daemon initialize
+  delay(3)
   console.log('Connecting to local IPFS...')
 
   const ipfs = createHttpClient({
@@ -81,6 +103,7 @@ async function main() {
     .catch((error) => console.error('Error writing CSV table:', error));
   await writeFile(file, CID)
   console.log(`All the CIDs are saved in ${file}`)
+  await stopIPFSDaemon()
 }
 
 main()
