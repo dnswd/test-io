@@ -7,8 +7,8 @@ import fs from 'fs';
 import path from 'path'
 import readline from 'readline';
 
-const mbSize = 1
-const file = `cid-${mbSize}MB-2.txt`
+const mbSize = 4
+const file = `cid-${mbSize}MB-1.txt`
 
 // Sample data for the CSV table
 const dataIpfsRead = [];
@@ -32,6 +32,7 @@ const deleteIPFSDirectory = async () => {
   try {
     await removeSync(ipfsDirPath);
     console.log('IPFS directory deleted.');
+    await delay(3)
   } catch (err) {
     console.error(`Failed to delete IPFS directory: ${err}`);
   }

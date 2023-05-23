@@ -2,13 +2,11 @@ import { createObjectCsvWriter as createCsvWriter } from 'csv-writer';
 import crypto from 'crypto';
 import { create as createHttpClient } from 'ipfs-http-client'
 import { hrtime } from 'process';
-import { spawn } from 'child_process';
-import { removeSync } from 'fs-extra/esm'
 import fs from 'fs';
 
 const n = 50
-const mbSize = 1
-const file = `cid-${mbSize}MB-2.txt`
+const mbSize = 4
+const file = `cid-${mbSize}MB-1.txt`
 
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms*1000));
