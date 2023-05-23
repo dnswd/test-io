@@ -46,12 +46,8 @@ async function main() {
   ipfsDaemon.unref()
 
   console.log(`Daemon PID is ${ipfsDaemon.pid}`)
-
-
-
-  
   const stopIPFSDaemon = async () => {
-    // ipfsDaemon.kill('SIGINT');
+    ipfsDaemon.kill('SIGINT');
     await deleteIPFSDirectory();
   };
 
@@ -70,25 +66,31 @@ async function main() {
     input: fileStream,
     crlfDelay: Infinity
   })
-
-  for await (const cid of rl) {
-    console.log(`Reading ${cid}`)
-    const chunkLen = 0
-    const dataLen = 0
-    const start = hrtime.bigint()
-    for await (const chunk of ipfs.cat(cid)) {
-      chunkLen += 1
-      dataLen += chunk.length
+  try {
+    for await (const cid of rl) {
+      console.log(`Reading ${cid}`)
+      const chunkLen = 0
+      const dataLen = 0
+      const start = hrtime.bigint()
+      for await (const chunk of ipfs.cat(cid)) {
+        chunkLen += 1
+        dataLen += chunk.length
+      }
+      const stop = hrtime.bigint()
+      console.log(`Got ${chunkLen} chunks with ${dataLen} of data.`)
+      dataIpfsRead.push({
+        start: start,
+        stop: stop,
+        duration: stop - start,
+        cid: cid
+      })
+      ipfs.repo.gc({ quiet: true })
     }
-    const stop = hrtime.bigint()
-    console.log(`Got ${chunkLen} chunks with ${dataLen} of data.`)
-    dataIpfsRead.push({
-      start: start,
-      stop: stop,
-      duration: stop - start,
-      cid: cid
-    })
-    ipfs.repo.gc({ quiet: true })
+  } catch (error) {
+    console.log(error)
+    process.exit(1)
+  } finally {
+    await stopIPFSDaemon()
   }
 
   console.log('Data remote read ran successfully.');
@@ -96,7 +98,6 @@ async function main() {
     .writeRecords(dataIpfsRead)
     .then(() => console.log('CSV table has been written successfully.'))
     .catch((error) => console.error('Error writing CSV table:', error));
-  await stopIPFSDaemon()
 }
 
 main()
