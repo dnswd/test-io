@@ -40,7 +40,7 @@ async function main() {
   console.log(`Starting IPFS read test using ${file} file.`)
   console.log('Starting IPFS Daemon...')
   const ipfsDaemon = spawn('jsipfs', ['daemon'], {
-    stdio: ['ignore', fs.openSync(logPath, 'a'), fs.openSync(logPath, 'a')],
+    stdio: ['ignore', fs.openSync('ipfs.log', 'a'), fs.openSync('ipfs.err', 'a')],
     detached: true,
   });
   ipfsDaemon.stdout.on('data', (data) => {
