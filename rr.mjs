@@ -4,6 +4,7 @@ import { hrtime } from 'process';
 import { spawn } from 'child_process';
 import { removeSync } from 'fs-extra/esm'
 import fs from 'fs';
+import path from 'path'
 import readline from 'readline';
 
 const mbSize = 16
