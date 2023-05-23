@@ -52,11 +52,12 @@ async function initiateDaemon() {
     console.log('Shutting down Daemon')
     ipfsDaemon.kill('SIGINT');
     process.kill(ipfsDaemon.pid, 'SIGINT')
+    delay(5)
     await deleteIPFSDirectory();
   };
 
   // wait until daemon initialize
-  await delay(3)
+  await delay(2)
   console.log('Connecting to local IPFS...')
   const ipfs = createHttpClient({
     host: '127.0.0.1',
