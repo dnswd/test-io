@@ -6,12 +6,12 @@ import readline from 'readline';
 
 const n = 100
 const mbSize = 1
-const file = `cid-${mbSize}MB.txt`
+const file = `cid-${mbSize}MB-20.txt`
 
 // Sample data for the CSV table
 const dataIpfsRead = [];
 const csvWriterIpfsRead = createCsvWriter({
-  path: `read-${mbSize}MB-${Date.now()}.csv`, // Path to the output file
+  path: `ipfs-read-${mbSize}MB-${Date.now()}.csv`, // Path to the output file
   header: [
     { id: 'start', title: 'Start (ns)' },
     { id: 'stop', title: 'Stop (ns)' },

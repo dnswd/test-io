@@ -4,8 +4,9 @@ import { create as createHttpClient } from 'ipfs-http-client'
 import { hrtime } from 'process';
 import fs from 'fs';
 
-const n = 100
+const n = 20
 const mbSize = 1
+const file = `cid-${mbSize}MB-1.txt`
 
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms*1000));
@@ -31,7 +32,7 @@ const dataIpfsWrite = [];
 const CID = [];
 
 const csvWriterIpfsWrite = createCsvWriter({
-  path: `write-${mbSize}MB-${Date.now()}.csv`, // Path to the output file
+  path: `ipfs-write-${mbSize}MB-${Date.now()}.csv`, // Path to the output file
   header: [
     { id: 'start', title: 'Start (ns)' },
     { id: 'stop', title: 'Stop (ns)' },
@@ -78,8 +79,8 @@ async function main() {
     .writeRecords(dataIpfsWrite)
     .then(() => console.log('CSV table has been written successfully.'))
     .catch((error) => console.error('Error writing CSV table:', error));
-  await writeFile(`cid-${mbSize}MB.txt`, CID)
-  console.log('All the CIDs are saved in cid.txt')
+  await writeFile(file, CID)
+  console.log(`All the CIDs are saved in ${file}`)
 }
 
 main()
