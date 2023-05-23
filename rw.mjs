@@ -6,7 +6,7 @@ import fs from 'fs';
 
 const n = 20
 const mbSize = 16
-const file = `cid-${mbSize}MB-2.txt`
+const file = `cid-${mbSize}MB-3.txt`
 
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms*1000));

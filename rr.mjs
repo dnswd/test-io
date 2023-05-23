@@ -5,7 +5,7 @@ import fs from 'fs';
 import readline from 'readline';
 
 const mbSize = 16
-const file = `cid-${mbSize}MB-2.txt`
+const file = `cid-${mbSize}MB-3.txt`
 
 // Sample data for the CSV table
 const dataIpfsRead = [];
