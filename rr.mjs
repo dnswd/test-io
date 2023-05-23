@@ -101,8 +101,6 @@ async function main() {
     console.log('CSV table has been written successfully.')
   } catch (error) {
     console.log(error)
-  } finally {
-    await stopIPFSDaemon()
   }
 }
 
