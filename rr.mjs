@@ -52,7 +52,7 @@ async function main() {
   };
 
   // wait until daemon initialize
-  delay(3)
+  await delay(3)
   console.log('Connecting to local IPFS...')
   const ipfs = createHttpClient({
     host: '127.0.0.1',
