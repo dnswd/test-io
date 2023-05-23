@@ -43,12 +43,6 @@ async function main() {
     stdio: ['ignore', fs.openSync('ipfs.log', 'a'), fs.openSync('ipfs.err', 'a')],
     detached: true,
   });
-  ipfsDaemon.stdout.on('data', (data) => {
-    console.log(`[IPFS] ${data}`);
-  });
-  ipfsDaemon.stderr.on('data', (data) => {
-    console.error('[IPFS stderr]', data.toString());
-  });
   ipfsDaemon.unref()
 
   console.log(`Daemon PID is ${ipfsDaemon.pid}`)
