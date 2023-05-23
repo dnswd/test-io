@@ -3,6 +3,7 @@ import { create as createHttpClient } from 'ipfs-http-client'
 import { hrtime } from 'process';
 import { spawn } from 'child_process';
 import { removeSync } from 'fs-extra/esm'
+import { homedir } from 'os'
 import fs from 'fs';
 import path from 'path'
 import readline from 'readline';
@@ -27,7 +28,7 @@ function delay(s) {
 }
 
 const deleteIPFSDirectory = async () => {
-  const ipfsDirPath = path.join(process.env.HOME, '.ipfs');
+  const ipfsDirPath = path.join(homedir(), '.jsipfs');
 
   try {
     await removeSync(ipfsDirPath);
@@ -50,6 +51,7 @@ async function initiateDaemon() {
   const stopIPFSDaemon = async () => {
     console.log('Shutting down Daemon')
     ipfsDaemon.kill('SIGINT');
+    process.kill(ipfsDaemon.pid, 'SIGINT')
     await deleteIPFSDirectory();
   };
 
@@ -75,11 +77,13 @@ async function main() {
     crlfDelay: Infinity
   })
   try {
+    let count = 0
     for await (const cid of rl) {
       const { stopIPFSDaemon, ipfs } = await initiateDaemon()
       // const chunkLen = 0
       // const dataLen = 0
-      console.log(`Reading ${cid}`)
+      count++
+      console.log(`[${count}] Reading ${cid}`)
       const start = hrtime.bigint()
       for await (const _ of ipfs.cat(cid)) {
         // chunkLen += 1

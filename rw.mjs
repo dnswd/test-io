@@ -63,6 +63,7 @@ async function main() {
     const value = generateMegaBytes(mbSize);
     const start = hrtime.bigint()
     const res = await ipfs.add(value)
+    await ipfs.name.publish(res.path)
     const stop = hrtime.bigint()
     dataIpfsWrite.push({
       start: start,
@@ -72,7 +73,7 @@ async function main() {
     })
     CID.push(res.path)
     console.log(`Successfully added ${res.path}`)
-    await delay(3)
+    await delay(5)
   }
   console.log('Data write ran successfully.');
   csvWriterIpfsWrite
