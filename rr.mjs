@@ -88,17 +88,16 @@ async function main() {
       })
       ipfs.repo.gc({ quiet: true })
     }
+
+    console.log('Data remote read ran successfully.');
+    await csvWriterIpfsRead
+      .writeRecords(dataIpfsRead)
+    console.log('CSV table has been written successfully.')
   } catch (error) {
     console.log(error)
   } finally {
     await stopIPFSDaemon()
   }
-
-  console.log('Data remote read ran successfully.');
-  csvWriterIpfsRead
-    .writeRecords(dataIpfsRead)
-    .then(() => console.log('CSV table has been written successfully.'))
-    .catch((error) => console.error('Error writing CSV table:', error));
 }
 
 main()
