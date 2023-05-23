@@ -4,14 +4,13 @@ import { hrtime } from 'process';
 import fs from 'fs';
 import readline from 'readline';
 
-const n = 100
 const mbSize = 1
-const file = `cid-${mbSize}MB-20.txt`
+const file = `cid-${mbSize}MB-1.txt`
 
 // Sample data for the CSV table
 const dataIpfsRead = [];
 const csvWriterIpfsRead = createCsvWriter({
-  path: `ipfs-read-${mbSize}MB-${Date.now()}.csv`, // Path to the output file
+  path: `ipfs-read-${file}-${Date.now()}.csv`, // Path to the output file
   header: [
     { id: 'start', title: 'Start (ns)' },
     { id: 'stop', title: 'Stop (ns)' },
@@ -21,7 +20,7 @@ const csvWriterIpfsRead = createCsvWriter({
 });
 
 async function main() {
-  console.log(`Starting ${n} test with ${mbSize} MiB data each.`)
+  console.log(`Starting IPFS read test using ${file} file.`)
   console.log('Connecting to local IPFS...')
 
   const ipfs = createHttpClient({
