@@ -41,7 +41,7 @@ async function main() {
     const chunkLen = 0
     const dataLen = 0
     const start = hrtime.bigint()
-    for await (const chunk of this.ipfs.cat(cid)) {
+    for await (const chunk of ipfs.cat(cid)) {
       chunkLen += 1
       dataLen += chunk.length
     }
