@@ -39,17 +39,25 @@ const deleteIPFSDirectory = async () => {
 async function main() {
   console.log(`Starting IPFS read test using ${file} file.`)
   console.log('Starting IPFS Daemon...')
-  const ipfsDaemon = spawn('jsipfs', ['daemon']);
+  const ipfsDaemon = spawn('jsipfs', ['daemon'], {
+    stdio: ['ignore', fs.openSync(logPath, 'a'), fs.openSync(logPath, 'a')],
+    detached: true,
+  });
   ipfsDaemon.stdout.on('data', (data) => {
     console.log(`[IPFS] ${data}`);
   });
   ipfsDaemon.stderr.on('data', (data) => {
     console.error('[IPFS stderr]', data.toString());
   });
+  ipfsDaemon.unref()
 
   console.log(`Daemon PID is ${ipfsDaemon.pid}`)
+
+
+
+  
   const stopIPFSDaemon = async () => {
-    ipfsDaemon.kill('SIGINT');
+    // ipfsDaemon.kill('SIGINT');
     await deleteIPFSDirectory();
   };
 
