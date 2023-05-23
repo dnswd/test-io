@@ -38,9 +38,15 @@ async function main() {
 
   for await (const cid of rl) {
     console.log(`Reading ${cid}`)
+    const chunkLen = 0
+    const dataLen = 0
     const start = hrtime.bigint()
-    await ipfs.cat(cid)
+    for await (const chunk of this.ipfs.cat(cid)) {
+      chunkLen += 1
+      dataLen += chunk.length
+    }
     const stop = hrtime.bigint()
+    console.log(`Got ${chunkLen} chunks with ${dataLen} of data.`)
     dataIpfsRead.push({
       start: start,
       stop: stop,
