@@ -77,12 +77,12 @@ async function main() {
     for await (const cid of rl) {
       console.log(`Reading ${cid}`)
       const { stopIPFSDaemon, ipfs } = await initiateDaemon()
-      const chunkLen = 0
-      const dataLen = 0
+      // const chunkLen = 0
+      // const dataLen = 0
       const start = hrtime.bigint()
-      for await (const chunk of ipfs.cat(cid)) {
-        chunkLen += 1
-        dataLen += chunk.length
+      for await (const _ of ipfs.cat(cid)) {
+        // chunkLen += 1
+        // dataLen += chunk.length
       }
       const stop = hrtime.bigint()
       console.log(`Got ${chunkLen} chunks with ${dataLen} of data.`)
