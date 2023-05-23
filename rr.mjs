@@ -47,6 +47,7 @@ async function main() {
 
   console.log(`Daemon PID is ${ipfsDaemon.pid}`)
   const stopIPFSDaemon = async () => {
+    console.log('Shutting down Daemon')
     ipfsDaemon.kill('SIGINT');
     await deleteIPFSDirectory();
   };
