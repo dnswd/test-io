@@ -8,7 +8,7 @@ import path from 'path'
 import readline from 'readline';
 
 const mbSize = 1
-const file = `cid-${mbSize}MB-1.txt`
+const file = `cid-${mbSize}MB-2.txt`
 
 // Sample data for the CSV table
 const dataIpfsRead = [];
@@ -75,10 +75,10 @@ async function main() {
   })
   try {
     for await (const cid of rl) {
-      console.log(`Reading ${cid}`)
       const { stopIPFSDaemon, ipfs } = await initiateDaemon()
       // const chunkLen = 0
       // const dataLen = 0
+      console.log(`Reading ${cid}`)
       const start = hrtime.bigint()
       for await (const _ of ipfs.cat(cid)) {
         // chunkLen += 1
