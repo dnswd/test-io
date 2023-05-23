@@ -40,6 +40,7 @@ async function main() {
   console.log(`Starting IPFS read test using ${file} file.`)
   console.log('Starting IPFS Daemon...')
   const ipfsDaemon = spawn('jsipfs', ['daemon']);
+  console.log(`Daemon PID is ${ipfsDaemon.pid}`)
   const stopIPFSDaemon = async () => {
     ipfsDaemon.kill('SIGINT');
     await deleteIPFSDirectory();
