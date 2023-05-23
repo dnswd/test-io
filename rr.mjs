@@ -7,8 +7,8 @@ import fs from 'fs';
 import path from 'path'
 import readline from 'readline';
 
-const mbSize = 16
-const file = `cid-${mbSize}MB-3.txt`
+const mbSize = 1
+const file = `cid-${mbSize}MB-1.txt`
 
 // Sample data for the CSV table
 const dataIpfsRead = [];
@@ -85,7 +85,7 @@ async function main() {
         // dataLen += chunk.length
       }
       const stop = hrtime.bigint()
-      console.log(`Got ${chunkLen} chunks with ${dataLen} of data.`)
+      // console.log(`Got ${chunkLen} chunks with ${dataLen} of data.`)
       dataIpfsRead.push({
         start: start,
         stop: stop,
