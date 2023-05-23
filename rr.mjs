@@ -4,8 +4,8 @@ import { hrtime } from 'process';
 import fs from 'fs';
 import readline from 'readline';
 
-const mbSize = 1
-const file = `cid-${mbSize}MB-5.txt`
+const mbSize = 4
+const file = `cid-${mbSize}MB-1.txt`
 
 // Sample data for the CSV table
 const dataIpfsRead = [];
