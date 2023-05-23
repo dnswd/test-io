@@ -89,7 +89,6 @@ async function main() {
     }
   } catch (error) {
     console.log(error)
-    process.exit(1)
   } finally {
     await stopIPFSDaemon()
   }
