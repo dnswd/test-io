@@ -37,8 +37,7 @@ const deleteIPFSDirectory = async () => {
   }
 };
 
-async function main() {
-  console.log(`Starting IPFS read test using ${file} file.`)
+async function initiateDaemon() {
   console.log('Starting IPFS Daemon...')
   const ipfsDaemon = spawn('jsipfs', ['daemon'], {
     stdio: ['ignore', fs.openSync('ipfs.log', 'a'), fs.openSync('ipfs.err', 'a')],
@@ -62,6 +61,12 @@ async function main() {
     protocol: 'http'
   })
 
+  return {stopIPFSDaemon, ipfs}
+}
+
+async function main() {
+  console.log(`Starting IPFS read test using ${file} file.`)
+
   console.log('Testing data remote read...')
   const fileStream = fs.createReadStream(file);
   const rl = readline.createInterface({
@@ -71,6 +76,7 @@ async function main() {
   try {
     for await (const cid of rl) {
       console.log(`Reading ${cid}`)
+      const { stopIPFSDaemon, ipfs } = await initiateDaemon()
       const chunkLen = 0
       const dataLen = 0
       const start = hrtime.bigint()
@@ -86,7 +92,7 @@ async function main() {
         duration: stop - start,
         cid: cid
       })
-      ipfs.repo.gc({ quiet: true })
+      await stopIPFSDaemon()
     }
 
     console.log('Data remote read ran successfully.');
