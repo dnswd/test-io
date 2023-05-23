@@ -22,7 +22,7 @@ const csvWriterIpfsRead = createCsvWriter({
 });
 
 function delay(s) {
-  return new Promise(resolve => setTimeout(resolve, s*1000));
+  return new Promise(resolve => setTimeout(resolve, s * 1000));
 }
 
 const deleteIPFSDirectory = async () => {
@@ -43,10 +43,12 @@ async function main() {
   ipfsDaemon.stdout.on('data', (data) => {
     console.log(`[IPFS] ${data}`);
   });
+  ipfsDaemon.stderr.on('data', (data) => {
+    console.error('[IPFS stderr]', data.toString());
+  });
 
   console.log(`Daemon PID is ${ipfsDaemon.pid}`)
   const stopIPFSDaemon = async () => {
-    ipfsDaemon.on('spawn')
     ipfsDaemon.kill('SIGINT');
     await deleteIPFSDirectory();
   };
@@ -84,7 +86,7 @@ async function main() {
       duration: stop - start,
       cid: cid
     })
-    ipfs.repo.gc({quiet: true})
+    ipfs.repo.gc({ quiet: true })
   }
 
   console.log('Data remote read ran successfully.');
