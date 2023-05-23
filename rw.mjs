@@ -5,8 +5,8 @@ import { hrtime } from 'process';
 import fs from 'fs';
 
 const n = 20
-const mbSize = 4
-const file = `cid-${mbSize}MB-5.txt`
+const mbSize = 16
+const file = `cid-${mbSize}MB-1.txt`
 
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms*1000));
