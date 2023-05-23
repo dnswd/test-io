@@ -62,7 +62,7 @@ const generateMegaBytes = (megaByteSize) => {
 async function main() {
   console.log(`Starting ${n} test with ${mbSize} MiB data each.`)
   console.log('Starting IPFS Daemon...')
-  const ipfsDaemon = spawn('ipfs', ['daemon']);
+  const ipfsDaemon = spawn('jsipfs', ['daemon']);
   const stopIPFSDaemon = async () => {
     ipfsDaemon.kill('SIGINT');
     await deleteIPFSDirectory();
