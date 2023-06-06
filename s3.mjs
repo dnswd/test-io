@@ -25,7 +25,7 @@ const storage = new Storage({
 
 const bucket = storage.bucket("test-centralized-store");
 
-const kbs = [4, 16, 64, 1000, 4000, 160000];
+const kbs = [4, 16, 64, 1*1024, 4*1024, 16*1024];
 
 const uploaded = {}
 
