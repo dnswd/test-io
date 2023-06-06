@@ -13,7 +13,7 @@ const logger = (message) => {
 }
 
 async function wait(s) {
-  return new Promise(resolve => setTimeout(resolve, s * 1000));
+  return new Promise(resolve => setTimeout(resolve, s*1000));
 }
 
 const serviceKey = path.join(process.cwd(), "keys.json");
@@ -29,21 +29,23 @@ const kbs = [4, 16, 64, 1*1024, 4*1024, 16*1024];
 
 const uploaded = {}
 
-async function uploadGCP(unit) {
-  // return new Promise((resolve, reject) => {
+function uploadGCP(unit) {
+  return new Promise((resolve, reject) => {
     const filename = `test1-${unit}KB`
     const blobStream = bucket
       .file(filename)
       .createWriteStream({ resumable: false });
     blobStream.on("finish", () => {
       logger(`Finished upload ${unit} kilobytes`)
+      resolve(filename)
     }).on("error", (e) => {
       logger(`Unable to upload ${unit} kilobytes: \n${e}`)
+      reject(e)
     });
     logger(`Uploading ${unit} kilobytes`)
     blobStream.end(generateRandomKiloBytes(unit))
-    return filename
-  // })
+    // return filename
+  })
 }
 
 async function downloadGCP(filename) {
@@ -62,9 +64,7 @@ async function cleanup(filename) {
   await bucket.file(filename).delete()
   await fs.unlink(filename, (err) => {
     if (err) {
-      reject(err)
-    } else {
-      resolve()
+      logger(err)
     }
   })
 }
