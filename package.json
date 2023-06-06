@@ -22,6 +22,7 @@
     "pg": "node pg.js",
     "write": "node rw.mjs",
     "read": "node rr.mjs",
-    "uploadgcp": "node s3.mjs"
+    "uploadgcp": "node s3populate.mjs",
+    "tesgcp": "node s3.mjs"
   }
 }

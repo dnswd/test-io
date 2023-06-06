@@ -9,7 +9,7 @@ const generateRandomKiloBytes = (kiloByteSize) => {
 };
 
 const logger = (message) => {
-  console.log(`${Date.now()},${message}`)
+  console.log(`${Date.now()/1000},${message}`)
 }
 
 async function wait(s) {
@@ -27,26 +27,26 @@ const bucket = storage.bucket("test-centralized-store");
 
 const kbs = [4, 16, 64, 1*1024, 4*1024, 16*1024];
 
-const uploaded = {}
+// const uploaded = {}
 
-function uploadGCP(unit) {
-  return new Promise((resolve, reject) => {
-    const filename = `test1-${unit}KB`
-    const blobStream = bucket
-      .file(filename)
-      .createWriteStream({ resumable: false });
-    blobStream.on("finish", () => {
-      logger(`Finished upload ${unit} kilobytes`)
-      resolve(filename)
-    }).on("error", (e) => {
-      logger(`Unable to upload ${unit} kilobytes: \n${e}`)
-      reject(e)
-    });
-    logger(`Uploading ${unit} kilobytes`)
-    blobStream.end(generateRandomKiloBytes(unit))
-    // return filename
-  })
-}
+// function uploadGCP(unit) {
+//   return new Promise((resolve, reject) => {
+//     const filename = `test1-${unit}KB`
+//     const blobStream = bucket
+//       .file(filename)
+//       .createWriteStream({ resumable: false });
+//     blobStream.on("finish", () => {
+//       logger(`Finished upload ${unit} kilobytes`)
+//       resolve(filename)
+//     }).on("error", (e) => {
+//       logger(`Unable to upload ${unit} kilobytes: \n${e}`)
+//       reject(e)
+//     });
+//     logger(`Uploading ${unit} kilobytes`)
+//     blobStream.end(generateRandomKiloBytes(unit))
+//     // return filename
+//   })
+// }
 
 async function downloadGCP(filename) {
   const file = bucket.file(filename)
@@ -61,7 +61,7 @@ async function downloadGCP(filename) {
 }
 
 async function cleanup(filename) {
-  await bucket.file(filename).delete()
+  // await bucket.file(filename).delete()
   await fs.unlink(filename, (err) => {
     if (err) {
       logger(err)
@@ -70,31 +70,38 @@ async function cleanup(filename) {
 }
 
 async function main() {
-  logger("Uploading files")
+  // logger("Uploading files")
 
-  for (const unit of kbs) {
-    const filename = await uploadGCP(unit)
-    uploaded[unit] = filename
-    logger("Waiting for ambient traffic")
-    await wait(5)
-  }
+  // for (const unit of kbs) {
+  //   const filename = await uploadGCP(unit)
+  //   uploaded[unit] = filename
+  //   logger("Waiting for ambient traffic")
+  //   await wait(5)
+  // }
 
-  logger("Mark download traffic, waiting for 10 seconds")
-    await wait(10)
+  // logger("Mark download traffic, waiting for 10 seconds")
+  //   await wait(10)
 
-  logger("Downloading files")
-  for (const unit in uploaded) {
-    const filename = uploaded[unit];
-    await downloadGCP(filename)
-    logger("Waiting for ambient traffic")
-    await wait(5)
-  }
-
+  const sizeKb = 4
+  const filename = `test1-${sizeKb}KB`
+  logger(`Downloading file ${filename}`)
+  await downloadGCP(filename)
   logger("Cleaning local and GCS")
-  for (const unit in uploaded) {
-    const filename = uploaded[unit];
-    await cleanup(filename)
-  }
+  await cleanup(filename)
+
+  // logger("Downloading files")
+  // for (const unit in uploaded) {
+  //   const filename = uploaded[unit];
+  //   await downloadGCP(filename)
+  //   logger("Waiting for ambient traffic")
+  //   await wait(5)
+  // }
+
+  // logger("Cleaning local and GCS")
+  // for (const unit in uploaded) {
+  //   const filename = uploaded[unit];
+  //   await cleanup(filename)
+  // }
 }
 
 main().catch(e => logger(e))
